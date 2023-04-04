@@ -1,31 +1,33 @@
 package controller;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceException;
-
 import connector.JpaUtil;
-import model.User;
 
 public class MainProject {
 
 	static EntityManagerFactory emf = JpaUtil.getEntityManagerFactory();
 	static EntityManager em = emf.createEntityManager();
+	static Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		System.out.println("connected");
-
-		User user_0 = new User("Luca", "Forma", LocalDate.of(2023, 02, 20));
-		// saveUser(user_0);
+		System.out.println("connected");		
 	}
 
-	public static void saveUser(User u) throws PersistenceException {
-		em.getTransaction().begin();
-		em.persist(u);
-		em.getTransaction().commit();
-		System.out.println("User was correctly saved in your User's list");
+	
+	public static LocalDate genDate( ) {		
+		System.out.println("Insert YEAR (YYYY)");
+		int year = MainProject.scan.nextInt();
+		System.out.println("Insert MONTH (MM)");
+		int month = MainProject.scan.nextInt();
+		System.out.println("Insert DAY (DD)");
+		int day = MainProject.scan.nextInt();
+		MainProject.scan.nextLine();
+		return LocalDate.of(year, month, day);
 	}
+
 
 }
