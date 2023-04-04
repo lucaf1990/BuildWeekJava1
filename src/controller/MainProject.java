@@ -14,7 +14,18 @@ public class MainProject {
 	static Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		System.out.println("connected");		
+		System.out.println("!!!CONNECTION ESTABILISHED");	
+		System.out.println("\n\t >>GESTIONALE TRENITALIA (104 S.p.A.)");
+		
+		while (true) {
+			try {
+				Menu.MainMenu();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 	}
 
 	

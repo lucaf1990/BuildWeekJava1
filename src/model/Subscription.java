@@ -4,13 +4,17 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
 
 public class Subscription extends TravelPasses {
-
+	
+	
+	@Enumerated(EnumType.ORDINAL)
 	private DurationType duration;
 
 	private LocalDate sub_exp; 
