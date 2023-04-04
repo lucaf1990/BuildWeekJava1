@@ -14,7 +14,6 @@ public class Subscription extends TravelPasses {
 	@Column(nullable=false)
 	private LocalDate sub_exp;
 	@ManyToOne
-	@Column(nullable=false)
 	private User user;
 	
 	public DurationType getDuration() {
