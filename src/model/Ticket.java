@@ -11,14 +11,14 @@ import javax.persistence.ManyToOne;
 public class Ticket extends TravelPasses {
 
 	@ManyToOne
-	private Long check;
+	private Vehicle check;
+	
 	private LocalDate checkDate;
 	
-	
-	public Long getCheck() {
+	public Vehicle getCheck() {
 		return check;
 	}
-	public void setCheck(Long check) {
+	public void setCheck(Vehicle check) {
 		this.check = check;
 	}
 	public LocalDate getCheckDate() {
