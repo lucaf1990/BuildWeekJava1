@@ -9,9 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Subscription extends TravelPasses {
 
-	@Column(nullable=false)
 	private DurationType duration;
-	@Column(nullable=false)
 	private LocalDate sub_exp;
 	@ManyToOne
 	private User user;
