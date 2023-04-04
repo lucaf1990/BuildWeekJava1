@@ -15,25 +15,17 @@ public class MainProject {
 	static EntityManager em = emf.createEntityManager();
 
 	public static void main(String[] args) {
-	System.out.println("connected");
-	
-	
-	User user_0= new User("Luca","Forma",LocalDate.of(2023, 02, 20));
+		System.out.println("connected");
 
-
-	saveUser(user_0);
-	
-	
+		User user_0 = new User("Luca", "Forma", LocalDate.of(2023, 02, 20));
+		// saveUser(user_0);
 	}
 
 	public static void saveUser(User u) throws PersistenceException {
-		
 		em.getTransaction().begin();
 		em.persist(u);
 		em.getTransaction().commit();
 		System.out.println("User was correctly saved in your User's list");
-		
 	}
-	
-	
+
 }

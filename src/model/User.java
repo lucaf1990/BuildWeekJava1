@@ -33,7 +33,6 @@ public class User implements Serializable {
 		this.name = name;
 		this.surname = surname;
 		this.setPass_emi(emi);
-
 	}
 
 	public String getName() {
