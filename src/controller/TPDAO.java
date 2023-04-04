@@ -6,7 +6,9 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
+import model.Subscription;
 import model.TravelPasses;
+import model.User;
 import model.VendingMachine;
 
 public class TPDAO {
@@ -48,5 +50,17 @@ public class TPDAO {
 		MainProject.em.getTransaction().commit();
 		return tp;
 	}
+	public static void checkValidity(User u) {
+		Query q = MainProject.em.createNamedQuery("Subscription.checkValidity");
+		q.setParameter("user", u);
+		List<Subscription> list= q.getResultList();
+		if(list.size()>0) {
+			System.out.println("User has a VALID subscription ");
+		}else {
+		System.out.println("PAY THE BILL");}
+		
+	
+	}
+	
 
 }
