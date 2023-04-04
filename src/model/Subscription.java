@@ -13,7 +13,6 @@ import javax.persistence.NamedQuery;
 
 public class Subscription extends TravelPasses {
 	
-	
 	@Enumerated(EnumType.ORDINAL)
 	private DurationType duration;
 
@@ -50,7 +49,5 @@ public class Subscription extends TravelPasses {
 	public String toString() {
 		return "Subscription" + super.toString() + "[duration=" + duration + ", sub_exp=" + sub_exp + ", user=" + user + "]";
 	}
-	
-	
 	
 }

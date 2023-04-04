@@ -2,9 +2,15 @@ package controller;
 
 import java.time.LocalDate;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 import model.DurationType;
+import model.Route;
 import model.Subscription;
+import model.Ticket;
 import model.User;
+import model.Vehicle;
+import model.Vehicle_type;
 import model.VendingMachine;
 
 public class Menu {
@@ -27,7 +33,7 @@ public class Menu {
 			System.out.println("\t\t 3 - TICKET");
 			System.out.println("\t\t 4 - VEICHLE");
 			System.out.println("\t\t 5 - VENDING MACHINE");
-			System.out.println("\t\t 6 - TRIP");
+			System.out.println("\t\t 6 - ROUTE");
 			int scelta1 = MainProject.scan.nextInt();
 			switch (scelta1) {
 			case 1 -> {
@@ -47,10 +53,16 @@ public class Menu {
 				System.out.print(">NEW SUBSCRIPTION: Insert vending machine id");
 				Long vmid = MainProject.scan.nextLong();
 				VendingMachine vm = VMDAO.getByID(vmid);
-				if (vm.isActive()) {
-					s1.setDistributor(vm);
+				if (vm != null) {
+					if (vm.isActive()) {
+						s1.setDistributor(vm);
+
+					} else {
+						System.out.println("Vending machine out of order setting Dealer acquired");
+					}
+
 				} else {
-					System.out.println("Vending Machine out of order or Dealer Acquired");
+					System.out.println("Vending Machine not found or Dealer Acquired");
 				}
 				System.out.println(">NEW SUBSCRIPTION: Insert emission date");
 				LocalDate emitted = MainProject.genDate();
@@ -73,6 +85,69 @@ public class Menu {
 				Long uid = MainProject.scan.nextLong();
 				User u = UserDAO.getByID(uid);
 				TPDAO.saveTicket(s1);
+			}
+			case 3 -> {
+
+				MainProject.scan.nextLine();
+				Ticket t1 = new Ticket();
+				System.out.print(">NEW TICKET: Insert vending machine id");
+				Long vmid = MainProject.scan.nextLong();
+				VendingMachine vm = VMDAO.getByID(vmid);
+				if (vm != null) {
+					if (vm.isActive()) {
+						t1.setDistributor(vm);
+
+					} else {
+						System.out.println("Vending machine out of order setting Dealer acquired");
+					}
+
+				} else {
+					System.out.println("Vending Machine not found or Dealer Acquired");
+				}
+				System.out.println(">NEW SUBSCRIPTION: Insert emission date");
+				LocalDate emitted = MainProject.genDate();
+				t1.setEmitted(emitted);
+				TPDAO.saveTicket(t1);
+
+			}
+			case 4 -> {
+			
+				MainProject.scan.nextLine();
+				Vehicle v1 = new Vehicle();
+				System.out.print(">NEW VEHICLE: Insert type: ");
+				System.out.println("\t\t 1 - BUS");
+				System.out.println("\t\t 2 - TRAM");
+				int vt = MainProject.scan.nextInt();
+				MainProject.scan.nextLine();
+				if (vt == 1) {
+					v1.setV_type(Vehicle_type.BUS);
+
+				} else {
+					v1.setV_type(Vehicle_type.TRAM);
+				}
+				v1.setIn_service(true);
+				VDAO.saveVehicle(v1);
+			}
+			case 5 -> {
+				MainProject.scan.nextLine();
+				System.out.print(">NEW VENDING MACHINE: Insert status: ");
+				boolean vm = MainProject.scan.nextBoolean();
+				VendingMachine vm1 = new VendingMachine();
+				vm1.setActive(vm);
+				VMDAO.saveVendingMachine(vm1);
+				
+			}
+			case 6 ->{
+				MainProject.scan.nextLine();
+				System.out.print(">NEW ROUTE: Starts from:  ");
+				String sp = MainProject.scan.nextLine();
+				System.out.print(">NEW ROUTE: Ends at:  ");
+				String ep= MainProject.scan.nextLine();
+				System.out.print(">NEW ROUTE: Duration:  (min)");
+				int dur= MainProject.scan.nextInt();
+				MainProject.scan.nextLine();
+				Route r1= new Route(sp,ep,dur);
+				RODAO.saveRoute(r1);
 			}
 			}
 
