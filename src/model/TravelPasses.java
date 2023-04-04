@@ -11,18 +11,23 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name="tickets")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@NamedQuery(name = "TravelPasses.listAllTicketsByDate", query = "SELECT tp FROM TravelPasses tp WHERE tp.emitted BETWEEN :start AND :end")
+@NamedQuery(name = "TravelPasses.listAllTicketsByVendor", query = "SELECT tp FROM TravelPasses tp WHERE tp.distributor = :vm")
 public abstract class TravelPasses implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(nullable=false)
 	private LocalDate emitted;
+	
 	@ManyToOne
 	private VendingMachine distributor;
 	
