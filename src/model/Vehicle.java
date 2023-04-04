@@ -41,14 +41,12 @@ public class Vehicle implements Serializable {
 	
 	public Vehicle(Vehicle_type vehicle_type, int capacity) {
 		this.v_type = vehicle_type;
-		this.capacity = capacity;
 		this.in_service = true;
 	}
 
-	public Vehicle(Vehicle_type vehicle_type, int capacity, boolean in_service, LocalDate maintenance_start,
+	public Vehicle(Vehicle_type vehicle_type, boolean in_service, LocalDate maintenance_start,
 			LocalDate maintenance_end) {
 		this.v_type = vehicle_type;
-		this.capacity = capacity;
 		this.in_service = in_service;
 		this.maintenance_start = maintenance_start;
 		this.maintenance_end = maintenance_end;
@@ -60,6 +58,11 @@ public class Vehicle implements Serializable {
 
 	public void setV_type(Vehicle_type v_type) {
 		this.v_type = v_type;
+		if (v_type.equals(Vehicle_type.BUS)) {
+			setCapacity(50);
+		} else {
+			setCapacity(100);
+		}
 	}
 
 	public int getCapacity() {
