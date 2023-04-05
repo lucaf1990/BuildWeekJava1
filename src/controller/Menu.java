@@ -263,7 +263,7 @@ public class Menu {
 		}
 		case 3 -> {
 			System.out.print("\n\t >>TR-PASSES MANAGEMENT:\n");
-			System.out.println("\t 1 - VERIFY YOUR MEMBERSHIP RENEWAL");
+			System.out.println("\t 1 - VERIFY YOUR SUBSCRIPTIONS");
 			System.out.println("\t 2 - VERIFY YOUR EMITTED TP BY DATE");
 			System.out.println("\t 3 - VERIFY YOUR EMITTED TP BY SELLING MACHINE");
 			System.out.println("\t 4 - OBLITERATE TICKET");
@@ -277,11 +277,26 @@ public class Menu {
 				MainProject.scan.nextLine();
 				System.out.print(">INSERT USER ID:  ");
 				Long idV = MainProject.scan.nextLong();
+				MainProject.scan.nextLine();
 				User u = UserDAO.getByID(idV);
 				if (u.getPass_exp().isAfter(LocalDate.now())) {
 					TPDAO.checkValidity(u);
 				} else {
-					System.out.println("Membership expired");
+					System.out.println("Membership expired. Would you like to renew it? (y/n)");
+					String conf = MainProject.scan.nextLine();
+					switch (conf.toLowerCase()) {
+					case "y" -> {
+						u.setPass_emi(LocalDate.now());
+						UserDAO.updateUser(u);
+						System.out.println("Your Membership has been renewed for another year, thank you for chosing 104 SpA. ");
+					}
+					case "n" -> {
+						System.out.println("Ba ieccati allura");
+					}
+					default -> {
+						System.out.println("Invalid selection, try again!");
+					}
+					}
 				}
 			}
 			case 2 -> {
