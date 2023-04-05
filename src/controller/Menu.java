@@ -1,12 +1,12 @@
 package controller;
 
 import java.time.LocalDate;
-
-import org.hibernate.internal.build.AllowSysOut;
+import java.util.List;
 
 import model.DurationType;
 import model.Route;
 import model.Subscription;
+import model.TravelPasses;
 import model.Ticket;
 import model.User;
 import model.Vehicle;
@@ -114,7 +114,7 @@ public class Menu {
 
 			}
 			case 4 -> {
-			
+
 				MainProject.scan.nextLine();
 				Vehicle v1 = new Vehicle();
 				System.out.println(">NEW VEHICLE: Insert type: ");
@@ -138,108 +138,172 @@ public class Menu {
 				VendingMachine vm1 = new VendingMachine();
 				vm1.setActive(vm);
 				VMDAO.saveVendingMachine(vm1);
-				
+
 			}
-			case 6 ->{
+			case 6 -> {
 				MainProject.scan.nextLine();
 				System.out.print(">NEW ROUTE: Starts from:  ");
 				String sp = MainProject.scan.nextLine();
 				System.out.print(">NEW ROUTE: Ends at:  ");
-				String ep= MainProject.scan.nextLine();
+				String ep = MainProject.scan.nextLine();
 				System.out.print(">NEW ROUTE: Duration(min):  ");
-				int dur= MainProject.scan.nextInt();
+				int dur = MainProject.scan.nextInt();
 				MainProject.scan.nextLine();
-				Route r1= new Route(sp,ep,dur);
+				Route r1 = new Route(sp, ep, dur);
 				RODAO.saveRoute(r1);
-				}
+			}
 			}
 		}
 		case 2 -> {
 			System.out.print("\n\t >>VEHICLE MANAGEMENT:\n");
-			System.out.println("\n\t 1 - ASSIGN ROUTE TO VEHICLE");
-			System.out.println("\n\t 2 - SEND VEHICLE TO MAINTENANCE");
+			System.out.println("\t 1 - ASSIGN ROUTE TO VEHICLE");
+			System.out.println("\t 2 - SEND VEHICLE TO MAINTENANCE");
+			System.out.println("\t 3 - ADD RUN");
 			int scelta2 = MainProject.scan.nextInt();
 			switch (scelta2) {
 			case 1 -> {
 				MainProject.scan.nextLine();
 				System.out.print(">INSERT VEHICLE ID:  ");
 				Long idV = MainProject.scan.nextLong();
-				System.out.print(">INSERT ROUTE ID:  ");
-				Long idR = MainProject.scan.nextLong();
 				Vehicle v = VDAO.getByID(idV);
+				if (v.isIn_service()) {
+					System.out.print(">INSERT ROUTE ID:  ");
+				Long idR = MainProject.scan.nextLong();
 				Route r = RODAO.getByID(idR);
-				
+
 				v.setRoute(r);
 				VDAO.updateVeichle(v);
+				} else {
+					System.out.println("Vehicle out of order!");
 				}
+				
+			}
 			case 2 -> {
 				MainProject.scan.nextLine();
 				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
 				Long idV = MainProject.scan.nextLong();
 				Vehicle v = VDAO.getByID(idV);
-				
+
 				System.out.println(">INSERT THE MAINTENANCE START DATE:  ");
 				LocalDate maintStart = MainProject.genDate();
 				System.out.println(">INSERT THE MAINTENANCE END DATE:  ");
 				LocalDate maintEnd = MainProject.genDate();
-				
+
 				v.setMaintenance_start(maintStart);
 				v.setMaintenance_end(maintEnd);
 				VDAO.updateVeichle(v);
-				}
+			}
+			case 3 -> {
+				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
+				Long idV = MainProject.scan.nextLong();
+				Vehicle v = VDAO.getByID(idV);
+				v.addCount();
+				VDAO.updateVeichle(v);
+			}
+			default -> {System.out.println("Invalid selection, try again!");}
 			}
 		}
-		case 3 ->{
+		case 3 -> {
 			System.out.print("\n\t >>TR-PASSES MANAGEMENT:\n");
 			System.out.println("\n\t 1 - VERIFY YOUR MEMBERSHIP RENEWAL");
 			System.out.println("\n\t 2 - VERIFY YOUR EMITTED TP BY DATE");
 			System.out.println("\n\t 3 - VERIFY YOUR EMITTED TP BY SELLING MACHINE");
-			int scelta3= MainProject.scan.nextInt();
-			switch(scelta3){
-			
-			case 1->{
+			int scelta3 = MainProject.scan.nextInt();
+			switch (scelta3) {
+
+			case 1 -> {
 				MainProject.scan.nextLine();
 				System.out.print(">INSERT USER ID:  ");
 				Long idV = MainProject.scan.nextLong();
 				User u = UserDAO.getByID(idV);
-				if(u.getPass_exp().isAfter(LocalDate.now()) )
-				{TPDAO.checkValidity(u);}
-				else {
+				if (u.getPass_exp().isAfter(LocalDate.now())) {
+					TPDAO.checkValidity(u);
+				} else {
 					System.out.println("Membership expired");
 				}
 			}
-			case 2->{
+			case 2 -> {
 				MainProject.scan.nextLine();
 				System.out.println(">INSERT START DATE:  ");
 				LocalDate tpStart = MainProject.genDate();
 				System.out.println(">INSERT END DATE:  ");
 				LocalDate tpEnd = MainProject.genDate();
 				TPDAO.listAllTicketsByDate(tpStart, tpEnd);
-				
-			}	
-			case 3->{
+
+			}
+			case 3 -> {
 				MainProject.scan.nextLine();
 				System.out.println(">INSERT ID:  ");
-				Long idVM= MainProject.scan.nextLong();
+				Long idVM = MainProject.scan.nextLong();
 				VendingMachine vm = VMDAO.getByID(idVM);
 				TPDAO.listAllTicketsByVendor(vm);
 			}
-			default ->{
+			default -> {
 				System.out.println("Invalid selection, try again!");
 			}
 			}
-			
+
 		}
 		case 4 -> {
 			System.out.println("\n\t >>SHOW ALL LISTS:");
-			System.out.println("\n\t 1 - USERS");
-			System.out.println("\n\t 2 - VENDING MACHINES");
-			System.out.println("\n\t 3 - TRAVEL PASSES");
-			System.out.println("\n\t 4 - VEICHLES");
-			System.out.println("\n\t 5 - ROUTES");
+			System.out.println("\t 1 - USERS");
+			System.out.println("\t 2 - VENDING MACHINES");
+			System.out.println("\t 3 - TRAVEL PASSES");
+			System.out.println("\t 4 - VEICHLES");
+			System.out.println("\t 5 - ROUTES");
 			int scelta4 = MainProject.scan.nextInt();
 			switch (scelta4) {
-			
+			case 1 -> {
+				MainProject.scan.nextLine();
+				List<User> users = UserDAO.findAll();
+				if (users.size() > 0) {
+					users.forEach(el -> System.out.println(el));
+					System.out.println("There are " + users.size() + " users in DB.");
+				} else {
+					System.out.println("No users found");
+				}
+			}
+			case 2 -> {
+				MainProject.scan.nextLine();
+				List<VendingMachine> vms = VMDAO.findAll();
+				if (vms.size() > 0) {
+					vms.forEach(el -> System.out.println(el));
+					System.out.println("There are " + vms.size() + " VendingMachines in DB.");
+				} else {
+					System.out.println("No Vending Machines found");
+				}
+			}
+			case 3 -> {
+				MainProject.scan.nextLine();
+				List<TravelPasses> tpss = TPDAO.findAll();
+				if (tpss.size() > 0) {
+					tpss.forEach(el -> System.out.println(el));
+					System.out.println("There are " + tpss.size() + " TravelPAsses in DB.");
+				} else {
+					System.out.println("No TravelPAsses found");
+				}
+			}
+			case 4 -> {
+				MainProject.scan.nextLine();
+				List<Vehicle> vhs = VDAO.findAll();
+				if (vhs.size() > 0) {
+					vhs.forEach(el -> System.out.println(el));
+					System.out.println("There are " + vhs.size() + " vehicles in DB.");
+				} else {
+					System.out.println("No vehicles found");
+				}
+			}
+			case 5 -> {
+				MainProject.scan.nextLine();
+				List<Route> rts = RODAO.findAll();
+				if (rts.size() > 0) {
+					rts.forEach(el -> System.out.println(el));
+					System.out.println("There are " + rts.size() + " routes in DB.");
+				} else {
+					System.out.println("No routes found");
+				}
+			}
+			default -> {System.out.println("Action not allowed, try again!");}
 			}
 		}
 		default -> {
@@ -248,6 +312,5 @@ public class Menu {
 
 		}
 	}
-
 
 }
