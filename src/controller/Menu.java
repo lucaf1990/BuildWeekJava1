@@ -158,8 +158,9 @@ public class Menu {
 			System.out.print("\n\t >>VEHICLE MANAGEMENT:\n");
 			System.out.println("\t 1 - ASSIGN ROUTE TO VEHICLE");
 			System.out.println("\t 2 - SEND VEHICLE TO MAINTENANCE");
-			System.out.println("\t 3 - ADD RUN");
-			System.out.println("\t 4 - CHECK TOTAL RUNTIME");
+			System.out.println("\t 3 - ACTIVATE/DISABLE VENDING MACHINE");
+			System.out.println("\t 4 - ADD RUN");
+			System.out.println("\t 5 - CHECK TOTAL RUNTIME");
 			int scelta2 = MainProject.scan.nextInt();
 			switch (scelta2) {
 			case 1 -> {
@@ -169,15 +170,15 @@ public class Menu {
 				Vehicle v = VDAO.getByID(idV);
 				if (v.isIn_service()) {
 					System.out.print(">INSERT ROUTE ID:  ");
-				Long idR = MainProject.scan.nextLong();
-				Route r = RODAO.getByID(idR);
+					Long idR = MainProject.scan.nextLong();
+					Route r = RODAO.getByID(idR);
 
-				v.setRoute(r);
-				VDAO.updateVeichle(v);
+					v.setRoute(r);
+					VDAO.updateVeichle(v);
 				} else {
 					System.out.println("Vehicle out of order!");
 				}
-				
+
 			}
 			case 2 -> {
 				MainProject.scan.nextLine();
@@ -195,17 +196,54 @@ public class Menu {
 				VDAO.updateVeichle(v);
 			}
 			case 3 -> {
+				MainProject.scan.nextLine();
+				System.out.print(">SELECT A VENDING MACHINE (INSERT ID):  ");
+				Long idVM = MainProject.scan.nextLong();
+				VendingMachine vm = VMDAO.getByID(idVM);
+
+				if (vm.isActive() == true) {
+					System.out.print("VENDING MACHINE IS CURRENTLY ACTIVE. DISABLE? (y/n)");
+					String confirm = MainProject.scan.nextLine();
+					switch (confirm) {
+					case "y" -> {
+						System.out.println("DISABLING MACHINE...");
+						vm.setActive(false);
+						VMDAO.updateVendingMachine(vm);
+					}
+					case "Y" -> {
+						System.out.println("Okay ma non ti incazzare");
+						vm.setActive(false);
+						VMDAO.updateVendingMachine(vm);
+					}
+					case "n" -> {
+						System.out.println("VENDING MACHINE IS STILL ACTIVE.");
+					}
+					case "N" -> {
+						System.out.println("Va bene, scusa, non te lo chiedo più");
+					}
+					default -> {
+						System.out.println("Ou ma chi bo fari?");
+					}
+					}
+				} else {
+					System.out.println("ENABLING MACHINE");
+					vm.setActive(true);
+					VMDAO.updateVendingMachine(vm);
+				}
+
+			}
+			case 4 -> {
 				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
 				Long idV = MainProject.scan.nextLong();
 				Vehicle v = VDAO.getByID(idV);
 				if (v.getRoute() != null) {
-				v.addCount();
-				VDAO.updateVeichle(v);
+					v.addCount();
+					VDAO.updateVeichle(v);
 				} else {
 					System.out.println("No routes assigned to veichle");
 				}
 			}
-			case 4 -> {
+			case 5 -> {
 				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
 				Long idV = MainProject.scan.nextLong();
 				Vehicle v = VDAO.getByID(idV);
@@ -213,11 +251,13 @@ public class Menu {
 					Route r = v.getRoute();
 					long total = r.getTravel_time() * v.getCount();
 					System.out.println("Total travel time for vehicle" + v.getId() + ", is " + total + " mins.");
-					} else {
-						System.out.println("No routes assigned to veichle");
-					}
+				} else {
+					System.out.println("No routes assigned to veichle");
+				}
 			}
-			default -> {System.out.println("Invalid selection, try again!");}
+			default -> {
+				System.out.println("Invalid selection, try again!");
+			}
 			}
 		}
 		case 3 -> {
@@ -286,7 +326,7 @@ public class Menu {
 				Ticket t = (Ticket) TPDAO.getByID(tid);
 				if (t.getCheck() == null) {
 					System.out.println("Ticket is valid!");
-				} else {				
+				} else {
 					System.out.println("ACCATTITILLU U BIGLIETTU!");
 				}
 			}
@@ -369,7 +409,9 @@ public class Menu {
 					System.out.println("No routes found");
 				}
 			}
-			default -> {System.out.println("Action not allowed, try again!");}
+			default -> {
+				System.out.println("Action not allowed, try again!");
+			}
 			}
 		}
 		default -> {
