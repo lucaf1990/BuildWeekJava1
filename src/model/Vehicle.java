@@ -33,6 +33,8 @@ public class Vehicle implements Serializable {
 	@ManyToOne
 	private Route route;
 	
+	private Long count = 0l;
+	
 	private LocalDate maintenance_start = null;
 	private LocalDate maintenance_end = null;
 	
@@ -107,5 +109,13 @@ public class Vehicle implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void addCount() {
+		this.count++;
 	}
 }

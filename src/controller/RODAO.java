@@ -1,9 +1,16 @@
 package controller;
 
 import model.Route;
-import model.TravelPasses;
 
 public class RODAO {
+	
+	public static Route getByID(Long id) {
+		MainProject.em.getTransaction().begin();
+		Route r = MainProject.em.find(Route.class, id);
+		MainProject.em.getTransaction().commit();
+		return r;
+	}
+	
 	public static void saveRoute(Route r) {
 		MainProject.em.getTransaction().begin();
 		MainProject.em.persist(r);

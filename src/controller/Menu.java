@@ -18,6 +18,7 @@ public class Menu {
 	public static void MainMenu() throws Exception {
 		System.out.println("\n\t >>MAIN MENU\n");
 		System.out.println("\t\t 1 - CREATE");
+		System.out.println("\t\t 2 - VEHICLES MANAGEMENT");
 		System.out.println("\t\t 0 - EXIT");
 		System.out.print("\n\t >>SELECT AN ACTION: ");
 		int scelta = MainProject.scan.nextInt();
@@ -114,7 +115,7 @@ public class Menu {
 			
 				MainProject.scan.nextLine();
 				Vehicle v1 = new Vehicle();
-				System.out.print(">NEW VEHICLE: Insert type: ");
+				System.out.println(">NEW VEHICLE: Insert type: ");
 				System.out.println("\t\t 1 - BUS");
 				System.out.println("\t\t 2 - TRAM");
 				int vt = MainProject.scan.nextInt();
@@ -143,14 +144,48 @@ public class Menu {
 				String sp = MainProject.scan.nextLine();
 				System.out.print(">NEW ROUTE: Ends at:  ");
 				String ep= MainProject.scan.nextLine();
-				System.out.print(">NEW ROUTE: Duration:  (min)");
+				System.out.print(">NEW ROUTE: Duration(min):  ");
 				int dur= MainProject.scan.nextInt();
 				MainProject.scan.nextLine();
 				Route r1= new Route(sp,ep,dur);
 				RODAO.saveRoute(r1);
+				}
 			}
+		}
+		case 2 -> {
+			System.out.print("\n\t >>VEHICLE MANAGEMENT:\n");
+			System.out.println("\n\t 1 - ASSIGN ROUTE TO VEHICLE");
+			System.out.println("\n\t 2 - SEND VEHICLE TO MAINTENANCE");
+			int scelta2 = MainProject.scan.nextInt();
+			switch (scelta2) {
+			case 1 -> {
+				MainProject.scan.nextLine();
+				System.out.print(">INSERT VEHICLE ID:  ");
+				Long idV = MainProject.scan.nextLong();
+				System.out.print(">INSERT ROUTE ID:  ");
+				Long idR = MainProject.scan.nextLong();
+				Vehicle v = VDAO.getByID(idV);
+				Route r = RODAO.getByID(idR);
+				
+				v.setRoute(r);
+				VDAO.updateVeichle(v);
+				}
+			case 2 -> {
+				MainProject.scan.nextLine();
+				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
+				Long idV = MainProject.scan.nextLong();
+				Vehicle v = VDAO.getByID(idV);
+				
+				System.out.println(">INSERT THE MAINTENANCE START DATE:  ");
+				LocalDate maintStart = MainProject.genDate();
+				System.out.println(">INSERT THE MAINTENANCE END DATE:  ");
+				LocalDate maintEnd = MainProject.genDate();
+				
+				v.setMaintenance_start(maintStart);
+				v.setMaintenance_end(maintEnd);
+				VDAO.updateVeichle(v);
+				}
 			}
-
 		}
 		default -> {
 			System.out.println("Action not allowed, try again!");

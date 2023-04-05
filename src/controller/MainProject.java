@@ -25,11 +25,10 @@ public class MainProject {
 			}
 		}
 		
-		
 	}
 
 	
-	public static LocalDate genDate( ) {		
+	public static LocalDate genDate() {		
 		System.out.println("Insert YEAR (YYYY)");
 		int year = MainProject.scan.nextInt();
 		System.out.println("Insert MONTH (MM)");
