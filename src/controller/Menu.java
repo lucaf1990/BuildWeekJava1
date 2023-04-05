@@ -279,7 +279,15 @@ public class Menu {
 				}
 			}
 			case 5 -> {
-				//verifica biglietto
+				MainProject.scan.nextLine();
+				System.out.println(">INSERT TICKET ID:  ");
+				Long tid = MainProject.scan.nextLong();
+				Ticket t = (Ticket) TPDAO.getByID(tid);
+				if (t.getCheck() == null) {
+					System.out.println("Ticket is valid!");
+				} else {				
+					System.out.println("ACCATTITILLU U BIGLIETTU!");
+				}
 			}
 			default -> {
 				System.out.println("Invalid selection, try again!");
