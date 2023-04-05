@@ -19,6 +19,7 @@ public class Menu {
 		System.out.println("\n\t >>MAIN MENU\n");
 		System.out.println("\t\t 1 - CREATE");
 		System.out.println("\t\t 2 - VEHICLES MANAGEMENT");
+		System.out.println("\t\t 3 - TP-MANAGEMENT");
 		System.out.println("\t\t 0 - EXIT");
 		System.out.print("\n\t >>SELECT AN ACTION: ");
 		int scelta = MainProject.scan.nextInt();
@@ -187,11 +188,53 @@ public class Menu {
 				}
 			}
 		}
+		case 3 ->{
+			System.out.print("\n\t >>TR-PASSES MANAGEMENT:\n");
+			System.out.println("\n\t 1 - VERIFY YOUR MEMBERSHIP RENEWAL");
+			System.out.println("\n\t 2 - VERIFY YOUR EMITTED TP BY DATE");
+			System.out.println("\n\t 3 - VERIFY YOUR EMITTED TP BY SELLING MACHINE");
+			int scelta3= MainProject.scan.nextInt();
+			switch(scelta3){
+			
+			case 1->{
+				MainProject.scan.nextLine();
+				System.out.print(">INSERT USER ID:  ");
+				Long idV = MainProject.scan.nextLong();
+				User u = UserDAO.getByID(idV);
+				if(u.getPass_exp().isAfter(LocalDate.now()) )
+				{TPDAO.checkValidity(u);}
+				else {
+					System.out.println("Membership expired");
+				}
+			}
+			case 2->{
+				MainProject.scan.nextLine();
+				System.out.println(">INSERT START DATE:  ");
+				LocalDate tpStart = MainProject.genDate();
+				System.out.println(">INSERT END DATE:  ");
+				LocalDate tpEnd = MainProject.genDate();
+				TPDAO.listAllTicketsByDate(tpStart, tpEnd);
+				
+			}	
+			case 3->{
+				MainProject.scan.nextLine();
+				System.out.println(">INSERT ID:  ");
+				Long idVM= MainProject.scan.nextLong();
+				VendingMachine vm = VMDAO.getByID(idVM);
+				TPDAO.listAllTicketsByVendor(vm);
+			}
+			default ->{
+				
+			}
+			}
+			
+		}
 		default -> {
 			System.out.println("Action not allowed, try again!");
 		}
 
 		}
 	}
+
 
 }
