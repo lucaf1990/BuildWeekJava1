@@ -59,7 +59,7 @@ public class TPDAO {
 		if(list.size()>0) {
 			System.out.println("User has a VALID subscription ");
 		}else {
-		System.out.println("PAY THE BILL");}
+		System.out.println("Memebership expired please renew");}
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -62,6 +62,12 @@ public class Route {
 	public Long getId() {
 		return id;
 	}
+
+	@Override
+	public String toString() {
+		return "Route [id=" + id + ", departure=" + departure + ", terminus=" + terminus + ", travel_time="
+				+ travel_time + "]";
+	}
 	
 
 }
