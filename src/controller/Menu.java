@@ -265,7 +265,7 @@ public class Menu {
 				if (t.getCheck() == null) {
 					System.out.println(">INSERT VEICHLE ID:  ");
 					Long vid = MainProject.scan.nextLong();
-					Vehicle v = VDAO.getByID(tid);
+					Vehicle v = VDAO.getByID(vid);
 					if (v.getRoute() != null) {
 						t.setCheck(v);
 						LocalDate data = MainProject.genDate();
