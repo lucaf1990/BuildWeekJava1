@@ -47,7 +47,7 @@ public class Subscription extends TravelPasses {
 	}
 	@Override
 	public String toString() {
-		return "Subscription" + "[id=" + this.getId() + ", emitted=" + this.getEmitted() + ", distr=" + this.getDistributor() + ", duration=" + duration + ", sub_exp=" + sub_exp + ", user=" + user + "]";
+		return "Subscription " + "[id=" + this.getId() + ", emitted=" + this.getEmitted() + ", distr=" + this.getDistributor() + ", duration=" + duration + ", sub_exp=" + sub_exp + ", user=" + user + "]";
 	}
 	
 }
