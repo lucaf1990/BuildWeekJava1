@@ -227,6 +227,8 @@ public class Menu {
 			System.out.println("\t 3 - VERIFY YOUR EMITTED TP BY SELLING MACHINE");
 			System.out.println("\t 4 - OBLITERATE TICKET");
 			System.out.println("\t 5 - CHECK TICKET");
+			System.out.println("\t 6 - GET TICKETS OBLITERATED ON A CERTAIN TIMELAPSE");
+			System.out.println("\t 7 - GET TICKETS OBLITERATED ON A CERTAIN VEHICLE");
 			int scelta3 = MainProject.scan.nextInt();
 			switch (scelta3) {
 
@@ -248,7 +250,6 @@ public class Menu {
 				System.out.println(">INSERT END DATE:  ");
 				LocalDate tpEnd = MainProject.genDate();
 				TPDAO.listAllTicketsByDate(tpStart, tpEnd);
-
 			}
 			case 3 -> {
 				MainProject.scan.nextLine();
@@ -289,11 +290,25 @@ public class Menu {
 					System.out.println("ACCATTITILLU U BIGLIETTU!");
 				}
 			}
+			case 6 -> {
+				MainProject.scan.nextLine();
+				System.out.println(">INSERT START DATE:  ");
+				LocalDate tpStart = MainProject.genDate();
+				System.out.println(">INSERT END DATE:  ");
+				LocalDate tpEnd = MainProject.genDate();
+				TPDAO.checkedByDate(tpStart, tpEnd);
+			}
+			case 7 -> {
+				MainProject.scan.nextLine();
+				System.out.println(">INSERT VEHICLE ID:  ");
+				Long idv = MainProject.scan.nextLong();
+				Vehicle v = VDAO.getByID(idv);
+				TPDAO.checkedByVehicle(v);
+			}
 			default -> {
 				System.out.println("Invalid selection, try again!");
 			}
 			}
-
 		}
 		case 4 -> {
 			System.out.println("\n\t >>SHOW ALL LISTS:");

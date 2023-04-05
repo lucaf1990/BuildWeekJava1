@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import model.Subscription;
 import model.TravelPasses;
 import model.User;
+import model.Vehicle;
 import model.VendingMachine;
 
 public class TPDAO {
@@ -65,6 +66,23 @@ public class TPDAO {
 	public static List<TravelPasses> findAll() {
 		Query q = MainProject.em.createNamedQuery("TravelPasses.findAll");
 		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void checkedByDate(LocalDate start, LocalDate end) {
+		Query q = MainProject.em.createNamedQuery("Ticket.checkedByDate");
+		q.setParameter("start", start);
+		q.setParameter("end", end);
+		List<TravelPasses> list = q.getResultList();
+		System.out.println(list.size() + " tickets were obliterated between " + start.toString() + " and " + end.toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static void checkedByVehicle(Vehicle vehicle) {
+		Query q = MainProject.em.createNamedQuery("Ticket.checkedByVehicle");
+		q.setParameter("vehicle", vehicle);
+		List<TravelPasses> list = q.getResultList();
+		System.out.println(list.size() + " tickets were obliterated from " + vehicle.toString());
 	}
 	
 }
