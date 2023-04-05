@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.List;
+
+import javax.persistence.Query;
+
 import model.Vehicle;
 
 public class VDAO {
@@ -23,6 +27,12 @@ public class VDAO {
 		MainProject.em.merge(v);
 		MainProject.em.getTransaction().commit();
 		System.out.println("Vehicle was correctly updated");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Vehicle> findAllFS() {
+		Query q = MainProject.em.createNamedQuery("Vehicle.findAllFS");
+		return q.getResultList();
 	}
 	
 	

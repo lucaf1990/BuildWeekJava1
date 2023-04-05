@@ -11,10 +11,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="vehicles")
+@NamedQuery(name = "Vehicle.findAllFS", query= "Select v FROM Vehicle v WHERE v.maintenance_start IS NOT NULL AND v.maintenance_end IS NOT NULL")
 public class Vehicle implements Serializable {
 	
 	@Id
@@ -28,7 +30,7 @@ public class Vehicle implements Serializable {
 	private int capacity;
 	
 	@Column(nullable = false)
-	private boolean in_service;
+	private boolean in_service = true;
 	
 	@ManyToOne
 	private Route route;
