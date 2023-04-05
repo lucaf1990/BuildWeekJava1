@@ -199,6 +199,7 @@ public class Menu {
 				MainProject.scan.nextLine();
 				System.out.print(">SELECT A VENDING MACHINE (INSERT ID):  ");
 				Long idVM = MainProject.scan.nextLong();
+				MainProject.scan.nextLine();
 				VendingMachine vm = VMDAO.getByID(idVM);
 
 				if (vm.isActive() == true) {
