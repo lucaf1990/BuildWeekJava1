@@ -20,6 +20,7 @@ public class Menu {
 		System.out.println("\t\t 1 - CREATE");
 		System.out.println("\t\t 2 - VEHICLES MANAGEMENT");
 		System.out.println("\t\t 3 - TP-MANAGEMENT");
+		System.out.println("\t\t 4 - SHOW ALL LISTS");
 		System.out.println("\t\t 0 - EXIT");
 		System.out.print("\n\t >>SELECT AN ACTION: ");
 		int scelta = MainProject.scan.nextInt();
@@ -224,10 +225,22 @@ public class Menu {
 				TPDAO.listAllTicketsByVendor(vm);
 			}
 			default ->{
-				
+				System.out.println("Invalid selection, try again!");
 			}
 			}
 			
+		}
+		case 4 -> {
+			System.out.println("\n\t >>SHOW ALL LISTS:");
+			System.out.println("\n\t 1 - USERS");
+			System.out.println("\n\t 2 - VENDING MACHINES");
+			System.out.println("\n\t 3 - TRAVEL PASSES");
+			System.out.println("\n\t 4 - VEICHLES");
+			System.out.println("\n\t 5 - ROUTES");
+			int scelta4 = MainProject.scan.nextInt();
+			switch (scelta4) {
+			
+			}
 		}
 		default -> {
 			System.out.println("Action not allowed, try again!");

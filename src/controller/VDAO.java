@@ -35,5 +35,10 @@ public class VDAO {
 		return q.getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static List<Vehicle> findAll() {
+		Query q = MainProject.em.createNamedQuery("Vehicle.findAll");
+		return q.getResultList();
+	}
 	
 }

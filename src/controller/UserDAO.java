@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import model.User;
 
@@ -24,6 +27,12 @@ public class UserDAO {
 		User u = MainProject.em.find(User.class, id);
 		MainProject.em.getTransaction().commit();
 		return u;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<User> findAll() {
+		Query q = MainProject.em.createNamedQuery("User.findAll");
+		return q.getResultList();
 	}
 	
 }

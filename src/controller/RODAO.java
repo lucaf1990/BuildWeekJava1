@@ -1,5 +1,9 @@
 package controller;
 
+import java.util.List;
+
+import javax.persistence.Query;
+
 import model.Route;
 
 public class RODAO {
@@ -23,6 +27,12 @@ public class RODAO {
 		MainProject.em.merge(r);
 		MainProject.em.getTransaction().commit();
 		System.out.println("Route was correctly updated");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<Route> findAll() {
+		Query q = MainProject.em.createNamedQuery("Route.findAll");
+		return q.getResultList();
 	}
 	
 }

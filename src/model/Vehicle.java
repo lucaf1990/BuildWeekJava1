@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="vehicles")
+@NamedQuery(name = "Vehicle.findAll", query= "Select v FROM Vehicle v")
 @NamedQuery(name = "Vehicle.findAllFS", query= "Select v FROM Vehicle v WHERE v.maintenance_start IS NOT NULL AND v.maintenance_end IS NOT NULL")
 public class Vehicle implements Serializable {
 	

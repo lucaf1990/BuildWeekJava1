@@ -1,6 +1,9 @@
 package controller;
 
+import java.util.List;
+
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 
 import model.VendingMachine;
 
@@ -26,6 +29,12 @@ public class VMDAO {
 		VendingMachine vm = MainProject.em.find(VendingMachine.class, id);
 		MainProject.em.getTransaction().commit();
 		return vm;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static List<VendingMachine> findAll() {
+		Query q = MainProject.em.createNamedQuery("VendingMachine.findAll");
+		return q.getResultList();
 	}
 	
 }

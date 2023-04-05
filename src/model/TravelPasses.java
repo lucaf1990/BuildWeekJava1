@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="tickets")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@NamedQuery(name = "TravelPasses.findAll", query = "SELECT tp FROM TravelPasses tp")
 @NamedQuery(name = "TravelPasses.listAllTicketsByDate", query = "SELECT tp FROM TravelPasses tp WHERE tp.emitted BETWEEN :start AND :end")
 @NamedQuery(name = "TravelPasses.listAllTicketsByVendor", query = "SELECT tp FROM TravelPasses tp WHERE tp.distributor = :vm")
 @NamedQuery(name = "Subscription.checkValidity", query = "SELECT s FROM Subscription s WHERE s.user = :user AND current_date < s.sub_exp")

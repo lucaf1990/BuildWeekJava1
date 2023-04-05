@@ -50,6 +50,7 @@ public class TPDAO {
 		MainProject.em.getTransaction().commit();
 		return tp;
 	}
+	@SuppressWarnings("unchecked")
 	public static void checkValidity(User u) {
 		Query q = MainProject.em.createNamedQuery("Subscription.checkValidity");
 		q.setParameter("user", u);
@@ -58,11 +59,12 @@ public class TPDAO {
 			System.out.println("User has a VALID subscription ");
 		}else {
 		System.out.println("PAY THE BILL");}
-		
 	}
 	
-
-	
-	
+	@SuppressWarnings("unchecked")
+	public static List<TravelPasses> findAll() {
+		Query q = MainProject.em.createNamedQuery("TravelPasses.findAll");
+		return q.getResultList();
+	}
 	
 }

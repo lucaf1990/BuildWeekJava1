@@ -6,10 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="machine")
+@NamedQuery(name = "VendingMachine.findAll", query = "SELECT vm FROM VendingMachine vm")
 public class VendingMachine implements Serializable {
 
 		@Id
