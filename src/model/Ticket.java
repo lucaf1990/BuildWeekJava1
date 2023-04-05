@@ -33,7 +33,7 @@ public class Ticket extends TravelPasses {
 	
 	@Override
 	public String toString() {
-		return "Ticket" + super.toString() + "[check=" + check + ", checkDate=" + checkDate + "]";
+		return "Ticket [id=" + this.getId() + ", emitted=" + this.getEmitted() + ", distr=" + this.getDistributor() + ", check=" + check + ", checkDate=" + checkDate + "]";
 	}
 	
 	
