@@ -42,7 +42,7 @@ public class MainProject {
 	}
 
 	public static void checkService() {
-		System.out.println(">CHECKING VEHICLES MAINTENANCE STATUS");
+		System.out.println("\n>CHECKING VEHICLES MAINTENANCE STATUS");
 		List<Vehicle> vList = VDAO.findAllFS();
 		if (vList.size() > 0) {
 			vList.forEach(v -> {
@@ -58,7 +58,7 @@ public class MainProject {
 		} else {
 			System.out.println("No vehicles found or no maintenance dates setted.");
 		}
-		System.out.println(">CHECKING VEHICLES MAINTENANCE STATUS UPDATED");
+		System.out.println(">CHECKING VEHICLES MAINTENANCE STATUS UPDATED\n");
 	}
 
 }

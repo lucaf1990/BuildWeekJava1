@@ -121,4 +121,14 @@ public class Vehicle implements Serializable {
 	public void addCount() {
 		this.count++;
 	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [id=" + id + ", v_type=" + v_type + ", capacity=" + capacity + ", in_service=" + in_service
+				+ ", route=" + route + ", count=" + count + ", maintenance_start=" + maintenance_start
+				+ ", maintenance_end=" + maintenance_end + "]";
+	}
+	
+	
+	
 }

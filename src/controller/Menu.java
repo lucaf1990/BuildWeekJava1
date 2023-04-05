@@ -159,6 +159,7 @@ public class Menu {
 			System.out.println("\t 1 - ASSIGN ROUTE TO VEHICLE");
 			System.out.println("\t 2 - SEND VEHICLE TO MAINTENANCE");
 			System.out.println("\t 3 - ADD RUN");
+			System.out.println("\t 4 - CHECK TOTAL RUNTIME");
 			int scelta2 = MainProject.scan.nextInt();
 			switch (scelta2) {
 			case 1 -> {
@@ -197,17 +198,35 @@ public class Menu {
 				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
 				Long idV = MainProject.scan.nextLong();
 				Vehicle v = VDAO.getByID(idV);
+				if (v.getRoute() != null) {
 				v.addCount();
 				VDAO.updateVeichle(v);
+				} else {
+					System.out.println("No routes assigned to veichle");
+				}
+			}
+			case 4 -> {
+				System.out.print(">SELECT A VEHICLE (INSERT ID):  ");
+				Long idV = MainProject.scan.nextLong();
+				Vehicle v = VDAO.getByID(idV);
+				if (v.getRoute() != null) {
+					Route r = v.getRoute();
+					long total = r.getTravel_time() * v.getCount();
+					System.out.println("Total travel time for vehicle" + v.getId() + ", is " + total + " mins.");
+					} else {
+						System.out.println("No routes assigned to veichle");
+					}
 			}
 			default -> {System.out.println("Invalid selection, try again!");}
 			}
 		}
 		case 3 -> {
 			System.out.print("\n\t >>TR-PASSES MANAGEMENT:\n");
-			System.out.println("\n\t 1 - VERIFY YOUR MEMBERSHIP RENEWAL");
-			System.out.println("\n\t 2 - VERIFY YOUR EMITTED TP BY DATE");
-			System.out.println("\n\t 3 - VERIFY YOUR EMITTED TP BY SELLING MACHINE");
+			System.out.println("\t 1 - VERIFY YOUR MEMBERSHIP RENEWAL");
+			System.out.println("\t 2 - VERIFY YOUR EMITTED TP BY DATE");
+			System.out.println("\t 3 - VERIFY YOUR EMITTED TP BY SELLING MACHINE");
+			System.out.println("\t 4 - OBLITERATE TICKET");
+			System.out.println("\t 5 - CHECK TICKET");
 			int scelta3 = MainProject.scan.nextInt();
 			switch (scelta3) {
 
@@ -237,6 +256,30 @@ public class Menu {
 				Long idVM = MainProject.scan.nextLong();
 				VendingMachine vm = VMDAO.getByID(idVM);
 				TPDAO.listAllTicketsByVendor(vm);
+			}
+			case 4 -> {
+				MainProject.scan.nextLine();
+				System.out.println(">INSERT TICKET ID:  ");
+				Long tid = MainProject.scan.nextLong();
+				Ticket t = (Ticket) TPDAO.getByID(tid);
+				if (t.getCheck() == null) {
+					System.out.println(">INSERT VEICHLE ID:  ");
+					Long vid = MainProject.scan.nextLong();
+					Vehicle v = VDAO.getByID(tid);
+					if (v.getRoute() != null) {
+						t.setCheck(v);
+						LocalDate data = MainProject.genDate();
+						t.setCheckDate(data);
+						TPDAO.updateTicket(t);
+					} else {
+						System.out.println("Vehicle out of order or not found");
+					}
+				} else {
+					System.out.println("Invalid Ticket");
+				}
+			}
+			case 5 -> {
+				//verifica biglietto
 			}
 			default -> {
 				System.out.println("Invalid selection, try again!");
